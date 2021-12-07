@@ -1,0 +1,31 @@
+SELECT
+(COUNT(DISTINCT ?cell_line) as ?cell_lines)
+(COUNT(DISTINCT ?taxon) as ?taxons)
+(COUNT(DISTINCT ?disease) as ?diseases)
+(COUNT(DISTINCT ?CLO_id) as ?CLO_ids)
+(COUNT(DISTINCT ?cellosaurus_id) as ?cellosaurus_ids)
+(COUNT(DISTINCT ?source) as ?sources)
+(COUNT(DISTINCT ?MESH_id) as ?MESH_ids)
+(COUNT(DISTINCT ?article) as ?wikipedia_articles)
+(COUNT(DISTINCT ?exact_match_link) as ?exact_match_links)
+(COUNT(DISTINCT ?parent_cell_line) as ?cell_lines_with_daughters)
+WHERE 
+{
+  ?cell_line wdt:P31 wd:Q21014462.
+  OPTIONAL {?cell_line wdt:P5166 ?disease.}
+  OPTIONAL {?cell_line wdt:P3432 ?parent_cell_line.}
+  OPTIONAL {?cell_line wdt:P2158 ?CLO_id.}
+  OPTIONAL {?cell_line wdt:P9072 ?taxon.}
+  OPTIONAL {?cell_line wdt:P3289 ?cellosaurus_id.}
+  OPTIONAL {?cell_line wdt:P1343 ?source.}
+  OPTIONAL {?cell_line wdt:P486 ?MESH_id.}
+  OPTIONAL {?cell_line wdt:P2888 ?exact_match_link.}
+  
+  
+  OPTIONAL {
+    ?article schema:about ?cell_line .
+    ?article schema:inLanguage "en" .
+    FILTER (SUBSTR(str(?article), 1, 25) = "https://en.wikipedia.org/")
+  }
+  
+}

@@ -1,0 +1,13 @@
+SELECT ?daughter_line1Label ?daughter_line2Label
+WHERE 
+{
+  BIND(wd:Q1881253 as ?line)
+  
+  ?daughter_line1 wdt:P3432* ?line . 
+  
+  ?daughter_line2 wdt:P3432* ?line . 
+  
+  ?daughter_line1 wdt:P3432 ?daughter_line2 . 
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". } # Helps get the label in your language, if not, then en language
+}
